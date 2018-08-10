@@ -9,10 +9,10 @@ pipeline {
             }
         }
         stage('Staging'){
-             steps {
-                  when {   //Only execte the staging stage only when the master branch is changed. 
+             when {   //Only execte the staging stage only when the master branch is changed. 
                       branch'master'
-                  }
+             }
+             steps {
              withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
              sshPublisher(
                         failOnError: true,
@@ -40,11 +40,12 @@ pipeline {
            }
         }
         stage('Prod'){
-              steps {
-                 input message:'Approve deployment?'
-               when {   //Only execte the staging stage only when the master branch is changed. 
+             when {   //Only execte the staging stage only when the master branch is changed. 
                       branch'master'
                   }
+             steps {
+                 input message:'Approve deployment?'
+                 milestone(1)
              withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
              sshPublisher(
                         failOnError: true,
