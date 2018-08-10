@@ -10,13 +10,13 @@ pipeline {
         }
         stage('Staging'){
               steps {
-                  
+                 sh 'ls' 
               }
         }
-        input:message
         stage('Prod'){
+                    input:message
               steps {
-                  
+                 sh 'ls' 
               }
         }
     }
