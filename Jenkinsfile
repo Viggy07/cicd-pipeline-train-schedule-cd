@@ -14,7 +14,7 @@ pipeline {
               }
         }
         stage('Prod'){
-                    input:message
+                input message:'Approve deployment?'
               steps {
                  sh 'ls' 
               }
